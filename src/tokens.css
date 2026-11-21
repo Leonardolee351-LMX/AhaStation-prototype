@@ -1,0 +1,352 @@
+/* Hallmark · genre: atmospheric · theme: custom (aha-lumen) · shape: typographic essay + floating gallery · deal: manual · signature: navy-azure-aqua bloom behind Plus Jakarta display · fonts: Plus Jakarta Sans / Inter · contrast: pass · v2.0.0 */
+/* Critique · P4 luminous restraint over chrome · H4 blue and light as the brand language · A4 airy matrices, not spreadsheets · T5 Plus Jakarta display, Inter for UI · C4 milky cards, glow used sparingly · M4 opacity and transform only */
+/* Hallmark · waived 58 · a design-system library must show complete state matrices and token tables, which cannot fit in eighty words per screen */
+/* Hallmark · answered F3 · overview hero is one display heading, one sentence, and a single action, all visible at 1280x800 in the main column */
+
+/* =========================================================================
+   AhaStation Design Tokens
+   编辑本文件即可更新整库。组件与文档只消费语义名，不直接写色值或字体名。
+   命名空间：--aha-
+   ========================================================================= */
+
+:root {
+  /* -----------------------------------------------------------------------
+     1) 原始色 Primitive
+     蓝色阶以 #2563EB 为中段 / 主色停点。
+     ----------------------------------------------------------------------- */
+
+  /* Blue · 50–900 · mid stop is the brand accent */
+  --aha-blue-50: #eef4ff;
+  --aha-blue-100: #dbe6ff;
+  --aha-blue-200: #bdd2ff;
+  --aha-blue-300: #8ab0ff;
+  --aha-blue-400: #4b82f7;
+  --aha-blue-500: #2563eb; /* 品牌主色 · 与现有 AhaStation token 对齐 */
+  --aha-blue-600: #1d4fd8;
+  --aha-blue-700: #1b3fb0;
+  --aha-blue-800: #1a3685;
+  --aha-blue-900: #15245a;
+
+  /* Neutral · 画板与墨色对齐参考板 #F7F8FC / #CBD5E1 / #64748B / #0F172A */
+  --aha-white: #fbfcff;
+  --aha-neutral-50: #f7f8fc;  /* 画布 */
+  --aha-neutral-100: #eef0f5;
+  --aha-neutral-200: #e2e6ee;
+  --aha-neutral-300: #cbd5e1;  /* 线条附近 */
+  --aha-neutral-400: #94a3b8;
+  --aha-neutral-500: #64748b;  /* 参考板中灰：装饰用，正文请用 600 */
+  --aha-neutral-600: #475569;  /* 可读的次级文字，画布上约 7.1:1 */
+  --aha-neutral-700: #334155;
+  --aha-neutral-800: #1e293b;
+  --aha-neutral-900: #0f172a;  /* 墨色 */
+
+  /* Warning orange · 仅用于警告或次要强调，绝不用作主按钮 */
+  --aha-orange-50: #fff7ed;
+  --aha-orange-100: #ffedd5;
+  --aha-orange-200: #fed7aa;
+  --aha-orange-300: #fdba74;
+  --aha-orange-400: #fb923c;
+  --aha-orange-500: #f97316;
+  --aha-orange-600: #ea580c; /* 指定警告橙 */
+  --aha-orange-700: #c2410c;
+  --aha-orange-800: #9a3412;
+  --aha-orange-900: #7c2d12;
+
+  /* Danger */
+  --aha-red-50: #fef2f2;
+  --aha-red-100: #fee2e2;
+  --aha-red-200: #fecaca;
+  --aha-red-400: #f87171;
+  --aha-red-500: #ef4444;
+  --aha-red-600: #dc2626;
+  --aha-red-700: #b91c1c;
+  --aha-red-800: #991b1b;
+
+  /* Success */
+  --aha-green-50: #f0fdf4;
+  --aha-green-100: #dcfce7;
+  --aha-green-200: #bbf7d0;
+  --aha-green-400: #4ade80;
+  --aha-green-500: #22c55e;
+  --aha-green-600: #16a34a;
+  --aha-green-700: #15803d;
+  --aha-green-800: #166534;
+
+  /* Data · 蓝 / 靛紫 / 酒红，降饱和以免发俗；不用糖果粉或交通灯绿 */
+  --aha-indigo-500: #5450b8;
+  --aha-rose-500: #b44a6e;
+  --aha-rose-600: #9a3558;
+  --aha-teal-700: #0c7c8a;
+  --aha-data-blue: var(--aha-blue-500);
+  --aha-data-indigo: var(--aha-indigo-500);
+  --aha-data-rose: var(--aha-rose-500);
+  --aha-data-ink: #0f172a;
+  --aha-data-aqua: var(--aha-aqua);
+  /* 兼容旧名 · 请改用 indigo / rose */
+  --aha-data-green: var(--aha-data-indigo);
+  --aha-data-pink: var(--aha-data-rose);
+
+  /* 光谱停点 · midnight → azure → aqua → white · 禁止紫到蓝渐变 */
+  --aha-midnight: #00071c;
+  --aha-azure: #006ec2;
+  --aha-aqua: #52d2e4;
+  --aha-spectrum-white: #f4fbff;
+
+  /* RGB 三元组，供阴影与光晕使用 */
+  --aha-blue-500-rgb: 37, 99, 235;
+  --aha-azure-rgb: 0, 110, 194;
+  --aha-aqua-rgb: 82, 210, 228;
+  --aha-midnight-rgb: 0, 7, 28;
+  --aha-ink-rgb: 15, 23, 42;
+  --aha-orange-600-rgb: 234, 88, 12;
+  --aha-indigo-500-rgb: 84, 80, 184;
+  --aha-rose-500-rgb: 180, 74, 110;
+  --aha-teal-700-rgb: 12, 124, 138;
+
+  /* -----------------------------------------------------------------------
+     2) 语义色 Semantic · 组件只应消费这一层
+     ----------------------------------------------------------------------- */
+
+  --aha-canvas: var(--aha-neutral-50);
+  --aha-canvas-tint: var(--aha-blue-50);
+  --aha-card: var(--aha-white);
+  --aha-ink: var(--aha-neutral-900);
+  --aha-muted: var(--aha-neutral-600);
+  --aha-line: var(--aha-neutral-300);
+  --aha-line-soft: var(--aha-neutral-200);
+
+  /* 字体颜色层级 · 大层级近黑，小层级浅灰，避免全文同一档死黑 */
+  --aha-text-display: var(--aha-neutral-900); /* #0F172A */
+  --aha-text-heading: var(--aha-neutral-900);
+  --aha-text-title: var(--aha-neutral-800);   /* #1E293B */
+  --aha-text-body: var(--aha-neutral-700);    /* #334155 · 接近黑的灰 */
+  --aha-text-label: var(--aha-neutral-600);   /* #475569 */
+  --aha-text-caption: var(--aha-neutral-500); /* #64748B */
+  --aha-text-faint: var(--aha-neutral-400);   /* #94A3B8 · 时间戳与装饰 */
+
+  --aha-color-primary: var(--aha-blue-500);
+  --aha-color-primary-hover: var(--aha-blue-600);
+  --aha-color-primary-pressed: var(--aha-blue-700);
+  --aha-color-primary-soft: var(--aha-blue-50);
+  --aha-color-on-primary: var(--aha-white);
+
+  --aha-color-danger: var(--aha-red-600);
+  --aha-color-danger-hover: var(--aha-red-700);
+  --aha-color-danger-soft: var(--aha-red-50);
+  --aha-color-on-danger: var(--aha-white);
+
+  /* 警告实心按钮：橙底墨字，保证 4.5:1，并保住 #EA580C 本色 */
+  --aha-color-warning: var(--aha-orange-600);
+  --aha-color-warning-hover: var(--aha-orange-700);
+  --aha-color-warning-soft: var(--aha-orange-50);
+  --aha-color-on-warning: var(--aha-ink);
+
+  --aha-color-success: var(--aha-color-accent-deep); /* #0C7C8A, readable on white */
+  --aha-color-success-hover: color-mix(in srgb, var(--aha-color-accent-deep) 82%, var(--aha-ink));
+  --aha-color-success-soft: var(--aha-color-accent-soft);
+  --aha-color-on-success: var(--aha-white);
+
+  --aha-quota-ok: var(--aha-green-500);
+  --aha-quota-warn: var(--aha-orange-600);
+  --aha-quota-crit: var(--aha-red-600);
+
+  /* 蓝绿亮色 · 只作提醒、在线、新到，不用在主按钮 */
+  --aha-color-accent: var(--aha-aqua);
+  --aha-color-accent-soft: color-mix(in srgb, var(--aha-aqua) 18%, var(--aha-white));
+  --aha-color-accent-deep: var(--aha-teal-700);
+  --aha-color-on-accent: var(--aha-midnight);
+
+  /* 光晕与焦点环 */
+  --aha-glow-color: rgba(var(--aha-blue-500-rgb), 0.32);
+  --aha-glow-aqua: rgba(var(--aha-aqua-rgb), 0.40);
+  --aha-glow: 0 10px 32px rgba(var(--aha-blue-500-rgb), 0.28);
+  --aha-glow-soft: 0 8px 28px rgba(var(--aha-azure-rgb), 0.18);
+  --aha-ring: 0 0 0 3px rgba(var(--aha-blue-500-rgb), 0.28);
+  --aha-focus-outline: 2px solid var(--aha-color-primary);
+  --aha-focus-offset: 2px;
+
+  /* 渐变 · 仅用于氛围、选中晕染、吉祥物场地，不作紫蓝过渡 */
+  --aha-gradient-spectrum: linear-gradient(
+    180deg,
+    var(--aha-midnight) 0%,
+    var(--aha-azure) 38%,
+    var(--aha-aqua) 68%,
+    var(--aha-spectrum-white) 100%
+  );
+  --aha-gradient-hero: radial-gradient(
+      80% 70% at 18% 20%,
+      rgba(var(--aha-aqua-rgb), 0.55) 0%,
+      transparent 58%
+    ),
+    radial-gradient(
+      70% 80% at 78% 30%,
+      rgba(var(--aha-azure-rgb), 0.55) 0%,
+      transparent 62%
+    ),
+    radial-gradient(
+      90% 80% at 50% 100%,
+      rgba(var(--aha-blue-500-rgb), 0.35) 0%,
+      transparent 55%
+    ),
+    var(--aha-midnight);
+  --aha-gradient-field: radial-gradient(
+      60% 50% at 20% 30%,
+      rgba(var(--aha-aqua-rgb), 0.22) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      50% 60% at 80% 20%,
+      rgba(var(--aha-azure-rgb), 0.16) 0%,
+      transparent 65%
+    ),
+    radial-gradient(
+      40% 40% at 70% 80%,
+      rgba(var(--aha-blue-500-rgb), 0.10) 0%,
+      transparent 60%
+    ),
+    var(--aha-canvas);
+
+  /* 间距 · 4 / 8 / 12 / 16 / 20 / 24 / 32 / 40 / 48 / 64 */
+  --aha-space-4: 4px;
+  --aha-space-8: 8px;
+  --aha-space-12: 12px;
+  --aha-space-16: 16px;
+  --aha-space-20: 20px;
+  --aha-space-24: 24px;
+  --aha-space-32: 32px;
+  --aha-space-40: 40px;
+  --aha-space-48: 48px;
+  --aha-space-64: 64px;
+
+  /* 圆角 */
+  --aha-radius-sm: 8px;
+  --aha-radius-md: 14px;
+  --aha-radius-lg: 20px;
+  --aha-radius-xl: 28px;
+  --aha-radius-pill: 999px;
+
+  /* 层级 Elevation 0–3 + 光晕 */
+  --aha-shadow-0: none;
+  --aha-shadow-1: 0 1px 2px rgba(var(--aha-ink-rgb), 0.05),
+    0 4px 12px rgba(var(--aha-ink-rgb), 0.04);
+  --aha-shadow-2: 0 2px 4px rgba(var(--aha-ink-rgb), 0.05),
+    0 12px 28px rgba(var(--aha-ink-rgb), 0.08);
+  --aha-shadow-3: 0 8px 16px rgba(var(--aha-ink-rgb), 0.06),
+    0 24px 48px rgba(var(--aha-ink-rgb), 0.10);
+  --aha-shadow-glow: var(--aha-shadow-2), var(--aha-glow);
+  --aha-shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+
+  /* Semantic elevation · 静止 / 悬停 / 拖起 / 浮层 / 光晕 */
+  --aha-elev-rest: var(--aha-shadow-1);
+  --aha-elev-hover: var(--aha-shadow-2);
+  --aha-elev-drag: 0 18px 28px rgba(var(--aha-ink-rgb), 0.08),
+    0 36px 72px rgba(var(--aha-blue-500-rgb), 0.16);
+  --aha-elev-overlay: var(--aha-shadow-3);
+  --aha-elev-glow: var(--aha-shadow-glow);
+
+  /* 字体家族 · 仅在此声明具体字体名 */
+  --aha-font-display: "Plus Jakarta Sans", "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", system-ui, sans-serif;
+  --aha-font-body: "Inter", "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", system-ui, sans-serif;
+  --aha-font-mono: ui-monospace, "SFMono-Regular", "Menlo", "Consolas",
+    "Liberation Mono", monospace;
+
+  /* 类型角色 · display / heading / title / body / label / caption */
+  --aha-display-family: var(--aha-font-display);
+  --aha-display-size: clamp(2.75rem, 5vw, 4.5rem);
+  --aha-display-weight: 700;
+  --aha-display-leading: 1.05;
+  --aha-display-color: var(--aha-text-display);
+
+  --aha-heading-family: var(--aha-font-display);
+  --aha-heading-size: clamp(1.75rem, 2.4vw, 2.25rem);
+  --aha-heading-weight: 700;
+  --aha-heading-leading: 1.2;
+  --aha-heading-color: var(--aha-text-heading);
+
+  --aha-title-family: var(--aha-font-display);
+  --aha-title-size: 1.25rem;
+  --aha-title-weight: 600;
+  --aha-title-leading: 1.35;
+  --aha-title-color: var(--aha-text-title);
+
+  --aha-body-family: var(--aha-font-body);
+  --aha-body-size: 1rem;
+  --aha-body-weight: 400;
+  --aha-body-leading: 1.6;
+  --aha-body-color: var(--aha-text-body);
+
+  --aha-label-family: var(--aha-font-body);
+  --aha-label-size: 0.8125rem;
+  --aha-label-weight: 500;
+  --aha-label-leading: 1.4;
+  --aha-label-color: var(--aha-text-label);
+
+  --aha-caption-family: var(--aha-font-body);
+  --aha-caption-size: 0.75rem;
+  --aha-caption-weight: 400;
+  --aha-caption-leading: 1.45;
+  --aha-caption-color: var(--aha-text-caption);
+
+  /* 动效 */
+  --aha-duration-fast: 120ms;
+  --aha-duration-mid: 180ms;
+  --aha-duration-slow: 240ms;
+  --aha-duration-page: 280ms;
+  --aha-duration-field: 32s;
+  --aha-duration-lattice: 48s;
+  --aha-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --aha-ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --aha-ease-in: cubic-bezier(0.4, 0, 1, 1);
+
+  /* -----------------------------------------------------------------------
+     3) 组件级 token · 仅在组件确实需要特例映射时使用
+     ----------------------------------------------------------------------- */
+  --aha-button-height-sm: 32px;
+  --aha-button-height-md: 40px;
+  --aha-button-height-lg: 48px;
+  --aha-button-pad-sm: 0 var(--aha-space-12);
+  --aha-button-pad-md: 0 var(--aha-space-16);
+  --aha-button-pad-lg: 0 var(--aha-space-20);
+  --aha-button-min: 64px;
+  --aha-fab-size: 56px;
+  --aha-card-padding: var(--aha-space-24);
+  --aha-card-min: 240px;
+  --aha-input-height: 40px;
+  --aha-input-min: 160px;
+  --aha-slider-min: 160px;
+  --aha-avatar-sm: 28px;
+  --aha-avatar-md: 40px;
+  --aha-avatar-lg: 56px;
+  --aha-toast-min: 280px;
+  --aha-toast-max: 420px;
+  --aha-tooltip-max: 240px;
+  --aha-modal-min: 320px;
+  --aha-modal-max: 640px;
+  --aha-upload-min-h: 160px;
+  --aha-z-dropdown: 40;
+  --aha-z-sticky: 50;
+  --aha-z-toast: 60;
+  --aha-z-modal: 70;
+  --aha-sidebar-width: 272px;
+  --aha-sidebar-min: 240px;
+  --aha-sidebar-max: 320px;
+  --aha-measure: 40rem;
+  --aha-docs-max: 1080px;
+  --aha-docs-wide: 1180px;
+  /* 断点 · 文档与媒体查询共用同一套宽度 */
+  --aha-bp-sm: 640px;
+  --aha-bp-md: 768px;
+  --aha-bp-lg: 1024px;
+  --aha-bp-xl: 1280px;
+
+  /* 组件一览场景色：浅色控件台、蓝色磁砖场地 */
+  --aha-kit-canvas: color-mix(in srgb, var(--aha-blue-100) 42%, var(--aha-neutral-50));
+  --aha-kit-line: color-mix(in srgb, var(--aha-blue-300) 55%, var(--aha-neutral-300));
+  --aha-field-ground: color-mix(in srgb, var(--aha-blue-400) 58%, var(--aha-blue-200));
+  --aha-field-tile: color-mix(in srgb, var(--aha-blue-400) 40%, var(--aha-blue-200));
+  --aha-color-delta-up: var(--aha-color-accent-deep);
+  --aha-color-delta-down: var(--aha-rose-600);
+}
+
