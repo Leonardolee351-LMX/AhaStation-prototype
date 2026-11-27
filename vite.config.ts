@@ -3,7 +3,8 @@ import { defineConfig } from 'vite'
 
 const port = Number(process.env.PORT) || 5177
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
+  base: mode === 'production' ? '/AhaStation-prototype/' : '/',
   plugins: [react()],
   server: {
     port,
@@ -17,4 +18,4 @@ export default defineConfig({
     host: '0.0.0.0',
     allowedHosts: true,
   },
-})
+}))
