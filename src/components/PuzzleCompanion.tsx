@@ -15,7 +15,7 @@ const REST_SPAN = 4000
 const REST_HOLD = 1400
 
 function assetUrl(file: string) {
-  return `/ip/${file}`
+  return `${import.meta.env.BASE_URL}ip/${file}`
 }
 
 export function PuzzleCompanion({

@@ -53,7 +53,7 @@ export function TopBar() {
         aria-current={state.activeTabKey == null ? 'page' : undefined}
         onClick={() => dispatch({ type: 'select-tab', key: null })}
       >
-        <img className="aha-brand-ip" src="/ip/core-stand-front-128.png" width={22} height={22} alt="" />
+        <img className="aha-brand-ip" src={`${import.meta.env.BASE_URL}ip/core-stand-front-128.png`} width={22} height={22} alt="" />
         <span className="aha-brand-name">AhaStation</span>
       </button>
       <div className="aha-tabstrip" ref={scroller} role="tablist" aria-label="工作区页签">

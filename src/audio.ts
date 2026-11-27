@@ -15,7 +15,7 @@ type LoopSound = {
   gain: GainNode
 }
 
-const SOUND_BASE = '/sounds/'
+const SOUND_BASE = `${import.meta.env.BASE_URL}sounds/`
 
 const THROTTLE_MS: Record<SoundName, number> = {
   click: 90,
