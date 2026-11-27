@@ -33,7 +33,7 @@ chmod +x start.command
 ./start.command
 ```
 
-首次启动会自动安装依赖，然后打开浏览器访问 [http://localhost:5175/](http://localhost:5175/)。若该地址已经在运行，脚本会直接打开浏览器，不会再启动一份服务。
+首次启动会自动安装依赖，然后打开浏览器访问 [http://localhost:5177/](http://localhost:5177/)。若该地址已经在运行，脚本会直接打开浏览器，不会再启动一份服务。
 
 也可以在解压目录里手动执行：
 
@@ -44,10 +44,10 @@ npm start
 
 ## 附屏
 
-左侧栏底部的「掌机」按钮，或「设置 → 通用」里的「打开掌机附屏」，会打开同步讨论和审批的附屏窗口。也可以直接访问 [http://localhost:5175/?view=handheld](http://localhost:5175/?view=handheld)。
+左侧栏底部的「掌机」按钮，或「设置 → 通用」里的「打开掌机附屏」，会打开同步讨论和审批的附屏窗口。也可以直接访问 [http://localhost:5177/?view=handheld](http://localhost:5177/?view=handheld)。
 
 ## 其他说明
 
-- 预览端口固定为 `5175`。
+- 预览端口固定为 `5177`。
 - 本目录是独立原型，不依赖旧项目或组件库安装包。
 - 风格 token 写在 `src/tokens.css`。

@@ -77,15 +77,37 @@ export function Avatar({
   )
 }
 
-export function AvatarStack({ agents }: { agents: Pick<Agent, 'id' | 'name' | 'role'>[] }) {
+export function AvatarStack({
+  agents,
+  onSelect,
+}: {
+  agents: Pick<Agent, 'id' | 'name' | 'role'>[]
+  onSelect?: (id: string) => void
+}) {
   const shown = agents.slice(0, 4)
   const extra = agents.length - shown.length
   return (
     <ul className="aha-avatars">
       {shown.map((agent) => (
         <li key={agent.id}>
-          <Avatar agent={agent} size="sm" />
-          <span className="aha-visually-hidden">{agent.name}</span>
+          {onSelect ? (
+            <button
+              type="button"
+              className="aha-avatar-button"
+              aria-label={`查看${agent.name}的模型与能力`}
+              onClick={(event) => {
+                event.stopPropagation()
+                onSelect(agent.id)
+              }}
+            >
+              <Avatar agent={agent} size="sm" />
+            </button>
+          ) : (
+            <>
+              <Avatar agent={agent} size="sm" />
+              <span className="aha-visually-hidden">{agent.name}</span>
+            </>
+          )}
         </li>
       ))}
       {extra > 0 ? <li className="aha-avatars-more">+{extra}</li> : null}

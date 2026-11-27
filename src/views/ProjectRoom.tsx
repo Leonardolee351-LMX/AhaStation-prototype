@@ -1,6 +1,7 @@
 import { IconPlus } from '../icons'
 import { ATTENTION_LABEL, attentionItems, countByStatus, formatWait, uniqueOwners } from '../lib'
 import { useWorkspace } from '../store'
+import { openAgentInspect, isInspectableAgent } from '../components/AgentInspect'
 import type { Project, TaskStatus } from '../types'
 import { TASK_STATUS_LABEL, TASK_STATUS_ORDER } from '../types'
 import { SurfaceLogo, ViewTitle } from '../components/SurfaceLogo'
@@ -87,7 +88,7 @@ function ProjectCard({
   reviewCount: number
 }) {
   const pace = projectPace(pendingCount, reviewCount, busy)
-  const { state } = useWorkspace()
+  const { state, dispatch } = useWorkspace()
   const counts = countByStatus(state.tasks, project.id)
   const taskCount = Object.values(counts).reduce((a, b) => a + b, 0)
   const limit = compact ? 1 : 2
@@ -95,22 +96,34 @@ function ProjectCard({
 
   return (
     <article className="aha-project-card">
-      <button type="button" className="aha-project-entry" onClick={onOpen}>
+      <div className="aha-project-entry">
         <div className="aha-project-entry-head">
-          <div className="aha-project-entry-title">
-            <SurfaceLogo kind="project" size={32} />
-            <div className="aha-project-entry-copy">
-              <h2>{project.name}</h2>
-              <p className="aha-muted">{project.path}</p>
+          <button type="button" className="aha-project-entry-open" onClick={onOpen}>
+            <div className="aha-project-entry-title">
+              <SurfaceLogo kind="project" size={32} />
+              <div className="aha-project-entry-copy">
+                <h2>{project.name}</h2>
+                <p className="aha-muted">{project.path}</p>
+              </div>
             </div>
+          </button>
+          {agents.length ? (
+            <AvatarStack
+              agents={agents}
+              onSelect={(id) => {
+                const item = agents.find((agent) => agent.id === id)
+                if (isInspectableAgent(item)) openAgentInspect(dispatch, id)
+              }}
+            />
+          ) : null}
+        </div>
+        <button type="button" className="aha-project-meta-open" onClick={onOpen}>
+          <div className="aha-project-meta">
+            <span>{taskCount} 项任务</span>
+            <span className={`aha-project-pace is-${pace.tone}`}>{pace.label}</span>
           </div>
-          {agents.length ? <AvatarStack agents={agents} /> : null}
-        </div>
-        <div className="aha-project-meta">
-          <span>{taskCount} 项任务</span>
-          <span className={`aha-project-pace is-${pace.tone}`}>{pace.label}</span>
-        </div>
-      </button>
+        </button>
+      </div>
       {compact ? (
         <ul className="aha-status-counts">
           {TASK_STATUS_ORDER.map((status) => (

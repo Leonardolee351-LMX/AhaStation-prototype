@@ -12,6 +12,7 @@ import {
 } from '../store'
 import type { EntryMode, ProjectSource } from '../types'
 import { TASK_STATUS_LABEL } from '../types'
+import { AgentInspectDialog } from '../components/AgentInspect'
 import { ApprovalChoices, hasApprovalChoices } from '../components/ApprovalChoices'
 import { LocalScanView } from '../components/LocalScanView'
 import { Button, Dialog, Field, TextArea, TextInput } from '../ui'
@@ -40,6 +41,7 @@ export function WorkspaceDialogs() {
   if (dialog.type === 'external-agent') return <ExternalAgentDialog />
   if (dialog.type === 'remote-host') return <RemoteHostDialog />
   if (dialog.type === 'confirm-delete-agent') return <DeleteAgentDialog agentId={dialog.agentId} />
+  if (dialog.type === 'inspect-agent') return <AgentInspectDialog agentId={dialog.agentId} />
   if (dialog.type === 'local-scan') return <LocalScanView variant="dialog" mode={dialog.mode ?? 'scan'} />
   return null
 }

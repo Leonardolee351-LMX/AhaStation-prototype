@@ -1,6 +1,7 @@
 import { IconPlus } from '../icons'
 import { pendingApprovals } from '../lib'
 import { HOST_ID, YOU_AGENT, YOU_ID, useWorkspace } from '../store'
+import { isInspectableAgent, openAgentInspect } from './AgentInspect'
 import type { Agent, Approval, Task } from '../types'
 import { Avatar } from '../ui'
 import { TaskProcess, eventsForTask } from './TaskProcess'
@@ -62,27 +63,43 @@ export function AgentStatusStrip({ projectId }: { projectId: string }) {
         const resolved = item.id === YOU_ID ? YOU_AGENT : (agent(item.id) ?? item)
         const work = workStateFor(item.id, tasks, approvals, listening)
         const clickable = Boolean(work.taskId)
+        const inspectable = isInspectableAgent(resolved)
         return (
-          <button
+          <div
             key={item.id}
-            type="button"
             role="listitem"
             className={`aha-agent-tile is-${work.kind}${clickable ? '' : ' is-static'}`}
             title={`${resolved.name} · ${work.label}`}
-            onClick={() => {
-              if (work.taskId) openTask(work.taskId)
-            }}
           >
-            <span className="aha-agent-tile-name">{resolved.name}</span>
-            <Avatar agent={resolved} size="lg" />
-            <span className="aha-agent-tile-status">{work.label}</span>
+            {inspectable ? (
+              <button
+                type="button"
+                className="aha-agent-tile-peek"
+                onClick={() => openAgentInspect(dispatch, resolved.id)}
+              >
+                <span className="aha-agent-tile-name">{resolved.name}</span>
+                <Avatar agent={resolved} size="lg" />
+              </button>
+            ) : (
+              <span className="aha-agent-tile-peek is-static">
+                <span className="aha-agent-tile-name">{resolved.name}</span>
+                <Avatar agent={resolved} size="lg" />
+              </span>
+            )}
+            {work.taskId ? (
+              <button type="button" className="aha-agent-tile-status" onClick={() => openTask(work.taskId!)}>
+                {work.label}
+              </button>
+            ) : (
+              <span className="aha-agent-tile-status">{work.label}</span>
+            )}
             {work.taskId
               ? (() => {
                   const task = tasks.find((item) => item.id === work.taskId)
                   return task ? <TaskProcess task={task} events={eventsForTask(state.events, task.id)} variant="tile" /> : null
                 })()
               : null}
-          </button>
+          </div>
         )
       })}
       <button

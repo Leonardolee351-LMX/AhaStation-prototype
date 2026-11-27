@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { startSoundLoop, stopSoundLoop } from '../audio'
 import { LOCAL_WORKSPACES, SAMPLE_FOLDER, type LocalWorkspaceHit } from '../data'
 import { isPlausiblePath, normalizePath, pathBasename } from '../lib'
 import { buildProject, useWorkspace, validateNewProject } from '../store'
@@ -30,6 +31,12 @@ function LocalScanBody({ mode }: { mode: 'scan' | 'cite' }) {
   const [selected, setSelected] = useState<string[]>([])
   const [path, setPath] = useState('')
   const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (phase !== 'scanning') return
+    startSoundLoop('loading', 'local-scan')
+    return () => stopSoundLoop('local-scan')
+  }, [phase])
 
   useEffect(() => {
     if (phase !== 'scanning') return

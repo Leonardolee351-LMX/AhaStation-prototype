@@ -82,6 +82,7 @@ import type {
   WorkflowEvent,
 } from './types'
 import { resolveSettingsSection } from './settings-sections'
+import { playSound, setSoundMuted } from './audio'
 
 export type NewProjectFields = {
   source: ProjectSource
@@ -104,6 +105,7 @@ export type DialogState =
   | { type: 'external-agent'; step: 1 | 2 | 3; hostId?: string; selected?: string[]; drafts?: Record<string, { name: string; description: string }> }
   | { type: 'remote-host' }
   | { type: 'confirm-delete-agent'; agentId: string }
+  | { type: 'inspect-agent'; agentId: string }
   | { type: 'local-scan'; mode?: 'scan' | 'cite' }
   | null
 
@@ -958,6 +960,85 @@ function agentName(state: WorkspaceState, id: string) {
   return findAgent(state, id)?.name ?? '未指定'
 }
 
+/** Translate a user-originated action into one sound semantic. State sync never calls this. */
+function playActionSound(action: Action, state: WorkspaceState) {
+  switch (action.type) {
+    case 'open-tab':
+    case 'select-tab':
+    case 'close-tab':
+    case 'set-related':
+    case 'set-settings-group':
+    case 'board-focus':
+    case 'set-voice':
+      playSound('click')
+      return
+    case 'host-reply':
+      playSound('message')
+      return
+    case 'send-message':
+      if ((action.role ?? 'you') !== 'you') playSound('message')
+      return
+    case 'add-proposal':
+    case 'mention':
+      playSound('message')
+      return
+    case 'resolve-approval': {
+      const approval = state.approvals.find((item) => item.id === action.approvalId)
+      if (!approval || approval.status !== 'pending') {
+        playSound('fail')
+        return
+      }
+      if (approval.options && action.decision === 'approved' && !action.optionId) return
+      const remaining = pendingApprovals(state.approvals, state.tasks).length - 1
+      if (action.decision === 'approved' && remaining <= 0) playSound('celebrate')
+      else playSound(action.decision === 'approved' ? 'success' : 'fail')
+      return
+    }
+    case 'accept-delivery':
+      playSound(action.allow ? 'success' : 'fail')
+      return
+    case 'resolve-proposal':
+      playSound(action.decision === 'confirmed' ? 'success' : 'fail')
+      return
+    case 'create-project':
+    case 'create-agent':
+    case 'update-agent':
+    case 'invite-agent':
+    case 'add-host':
+    case 'handheld-login':
+    case 'finish-local-scan':
+      playSound('success')
+      return
+    case 'import-local-projects':
+      if (action.projects.length) playSound('success')
+      return
+    case 'patch-host':
+      if (action.patch.connectionState === 'online' || action.patch.connectionState === 'simulated') playSound('success')
+      else if (action.patch.connectionState === 'offline') playSound('fail')
+      return
+    case 'set-provider-check':
+      if (action.check.status === 'success') playSound('success')
+      else if (action.check.status === 'failure') playSound('fail')
+      return
+    case 'patch-provider-account':
+      if (action.patch.status === 'success') playSound('success')
+      else if (action.patch.status === 'failure') playSound('fail')
+      return
+    case 'patch-mcp-server':
+      if (action.patch.status === 'connected') playSound('success')
+      else if (action.patch.status === 'error') playSound('fail')
+      return
+    case 'set-handheld-mode':
+      playSound(action.mode === 'shared' ? 'dock' : 'undock')
+      return
+    case 'handheld-logout':
+      playSound('undock')
+      return
+    default:
+      return
+  }
+}
+
 type Api = {
   state: WorkspaceState
   dispatch: Dispatch<Action>
@@ -1004,6 +1085,7 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
   stateRef.current = state
 
   const dispatch = useCallback<Dispatch<Action>>((action) => {
+    if (action.type !== 'replace-state') playActionSound(action, stateRef.current)
     if (handheld && action.type !== 'replace-state') {
       channelRef.current?.postMessage({ type: 'action', action })
     }
@@ -1044,10 +1126,14 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
   }, [state, handheld])
 
   useEffect(() => {
-    if (handheld || !state.toast) return
+    setSoundMuted(state.prefs.soundMuted)
+  }, [state.prefs.soundMuted])
+
+  useEffect(() => {
+    if (!state.toast) return
     const timer = window.setTimeout(() => reduceDispatch({ type: 'toast', message: null }), 3200)
     return () => window.clearTimeout(timer)
-  }, [handheld, state.toast])
+  }, [state.toast])
 
   useEffect(() => {
     persistColWidths(state.prefs)
@@ -1529,6 +1615,7 @@ export function makeCustomAgent(
     pinned: false,
     aiProvider,
     aiModel,
+    systemPrompt: `你是「${name.trim()}」。${description.trim() || '按授权完成指派的工作，并及时回报进展。'}`,
     reasoning: 'medium',
     tools: ['read-files'],
     skills: [],

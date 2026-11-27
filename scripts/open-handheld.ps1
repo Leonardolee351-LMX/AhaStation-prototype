@@ -72,7 +72,7 @@ Start-Sleep -Milliseconds 400
 $before = @{}
 foreach ($h in [HhWin]::Visible()) { $before[([string]$h)] = $true }
 
-$appUrl = '--app=http://localhost:5175/?view=handheld'
+$appUrl = '--app=http://localhost:5177/?view=handheld'
 Start-Process -FilePath $edge -ArgumentList $appUrl
 
 $hwnd = [IntPtr]::Zero
@@ -81,7 +81,7 @@ for ($i = 0; $i -lt 40; $i++) {
   foreach ($h in [HhWin]::Visible()) {
     $title = [HhWin]::Title($h)
     $isNew = -not $before.ContainsKey(([string]$h))
-    if ($isNew -and ($title -match 'Aha' -or $title -match 'localhost:5175' -or $title -match 'handheld')) {
+    if ($isNew -and ($title -match 'Aha' -or $title -match 'localhost:5177' -or $title -match 'handheld')) {
       $hwnd = $h
       break
     }

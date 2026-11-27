@@ -1,4 +1,5 @@
 @echo off
+chcp 936 >nul
 setlocal
 cd /d "%~dp0"
 set "PATH=%PATH%;C:\Program Files\nodejs\;C:\Program Files (x86)\nodejs\"
@@ -13,12 +14,12 @@ if errorlevel 1 goto :fail
 exit /b 0
 
 :nonode
-echo æœªæ£€æµ‹åˆ° Node.js / npmã€‚è¯·å…ˆå®‰è£… Node.jsï¼ˆhttps://nodejs.orgï¼‰ï¼Œç„¶åé‡æ–°è¿è¡Œã€‚
+echo Î´¼ì²âµ½ Node.js / npm¡£ÇëÏÈ°²×° Node.js£¨https://nodejs.org£©£¬È»ºóÖØĞÂÔËĞĞ¡£
 pause
 exit /b 1
 
 :fail
 echo.
-echo å¯åŠ¨å¤±è´¥ã€‚
+echo Æô¶¯Ê§°Ü¡£
 pause
 exit /b 1

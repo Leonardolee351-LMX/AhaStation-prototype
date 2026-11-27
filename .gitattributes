@@ -1,0 +1,6 @@
+# Windows 批处理必须保持 CRLF + GBK，禁止 Git 做换行转换
+*.cmd -text
+*.bat -text
+
+# macOS 启动脚本保持 LF
+*.command text eol=lf

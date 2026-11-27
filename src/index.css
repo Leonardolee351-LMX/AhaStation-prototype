@@ -4687,3 +4687,116 @@ select.aha-input:focus-visible {
 .aha-file-mark--file {
   background: color-mix(in srgb, var(--aha-neutral-100) 80%, var(--aha-blue-50));
 }
+
+
+.aha-avatar-button {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  border-radius: var(--aha-radius-pill);
+  cursor: pointer;
+  color: inherit;
+}
+
+.aha-agent-inspect-name {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  text-align: start;
+}
+
+.aha-agent-inspect {
+  display: grid;
+  gap: var(--aha-space-16);
+}
+
+.aha-agent-inspect-hero {
+  display: flex;
+  align-items: center;
+  gap: var(--aha-space-12);
+}
+
+.aha-agent-inspect-hero h3 {
+  margin: 0;
+  font-size: var(--aha-title-size);
+  color: var(--aha-text-title);
+}
+
+.aha-agent-inspect-hero p {
+  margin: var(--aha-space-4) 0 0;
+}
+
+.aha-agent-inspect section {
+  display: grid;
+  gap: var(--aha-space-8);
+}
+
+.aha-agent-inspect h4 {
+  margin: 0;
+  font-size: var(--aha-caption-size);
+  font-weight: 650;
+  color: var(--aha-text-caption);
+}
+
+.aha-agent-inspect p,
+.aha-agent-inspect pre {
+  margin: 0;
+  color: var(--aha-text-body);
+  font-family: var(--aha-font-body);
+  font-size: var(--aha-body-size);
+  line-height: var(--aha-body-leading);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.aha-agent-inspect pre {
+  max-height: 160px;
+  overflow: auto;
+  padding: var(--aha-space-12);
+  background: var(--aha-canvas);
+  border: 1px solid var(--aha-line-soft);
+  border-radius: var(--aha-radius-sm);
+}
+
+.aha-agent-tile-peek {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--aha-space-8);
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.aha-agent-tile-peek.is-static {
+  cursor: default;
+}
+
+.aha-agent-tile-status {
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+.aha-project-entry-open,
+.aha-project-meta-open {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}

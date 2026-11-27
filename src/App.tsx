@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState, type CSSProperties } from 'react'
+import { playSound } from './audio'
 import { HostBriefing } from './components/HostBriefing'
 import { LocalScanView } from './components/LocalScanView'
 import { LeftRail } from './components/LeftRail'
@@ -98,7 +99,13 @@ function WorkspaceShell() {
   }
 
   return (
-    <div className={className} style={style}>
+    <div
+      className={className}
+      style={style}
+      onClickCapture={(event) => {
+        if ((event.target as HTMLElement).closest('button, [role="switch"]')) playSound('click')
+      }}
+    >
       {showLeft ? <LeftRail /> : null}
       {showLeft ? null : (
         <button

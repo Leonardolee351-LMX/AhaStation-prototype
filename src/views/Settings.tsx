@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { startSoundLoop, stopSoundLoop } from '../audio'
 import { INITIAL_IDES, INITIAL_MEMORIES, PROVIDER_MODELS, SKILL_CATALOG } from '../data'
 import { IconEye, IconEyeOff, IconPin, IconPlus } from '../icons'
 import { SETTINGS_GROUPS, SETTINGS_SECTIONS, resolveSettingsSection, type SettingsSectionId } from '../settings-sections'
@@ -7,6 +8,7 @@ import { uid } from '../lib'
 import type { Agent, McpTransport } from '../types'
 import { openHandheldWindow } from '../handheld/HandheldDock'
 import { TaskProcess, eventsForTask } from '../components/TaskProcess'
+import { isInspectableAgent, openAgentInspect } from '../components/AgentInspect'
 import { Avatar, Badge, Button, Field, Switch, TextInput } from '../ui'
 
 export function SettingsView() {
@@ -153,6 +155,11 @@ function SpeechSection() {
           </select>
         </Field>
       </div>
+      <Switch
+        checked={!state.prefs.soundMuted}
+        onChange={(value) => dispatch({ type: 'set-prefs', patch: { soundMuted: !value } })}
+        label="播放界面交互音效"
+      />
       <Switch
         checked={state.prefs.reportMode}
         onChange={(value) => dispatch({ type: 'set-prefs', patch: { reportMode: value } })}
@@ -512,10 +519,25 @@ function AgentRow({ agent }: { agent: Agent }) {
 
   return (
     <li className="aha-agent-row">
-      <Avatar agent={agent} />
+      {isInspectableAgent(agent) ? (
+        <button
+          type="button"
+          className="aha-avatar-button"
+          aria-label={`查看${agent.name}的模型与能力`}
+          onClick={() => openAgentInspect(dispatch, agent.id)}
+        >
+          <Avatar agent={agent} />
+        </button>
+      ) : (
+        <Avatar agent={agent} />
+      )}
       <div className="aha-agent-copy">
         <h3>
-          {agent.name}
+          {isInspectableAgent(agent) ? (
+            <button type="button" className="aha-agent-inspect-name" onClick={() => openAgentInspect(dispatch, agent.id)}>
+              {agent.name}
+            </button>
+          ) : agent.name}
           {agent.role ? <em>{agent.role}</em> : null}
         </h3>
         <p>
@@ -678,12 +700,15 @@ function ProvidersGroup() {
                       size="sm"
                       disabled={account.status === 'checking'}
                       onClick={() => {
+                        const loopKey = `provider-check:${account.provider}`
+                        startSoundLoop('loading', loopKey)
                         dispatch({
                           type: 'patch-provider-account',
                           provider: account.provider,
                           patch: { status: 'checking', message: undefined },
                         })
                         window.setTimeout(() => {
+                          stopSoundLoop(loopKey)
                           const proxyOk = !account.proxyUrl || /^https?:\/\//.test(account.proxyUrl)
                           if (!account.apiKey.trim() || !proxyOk) {
                             dispatch({
@@ -800,8 +825,11 @@ function McpSection() {
                 variant="ghost"
                 disabled={!server.enabled}
                 onClick={() => {
+                  const loopKey = `mcp-check:${server.id}`
+                  startSoundLoop('loading', loopKey)
                   dispatch({ type: 'patch-mcp-server', id: server.id, patch: { status: 'idle', detail: '正在检查…' } })
                   window.setTimeout(() => {
+                    stopSoundLoop(loopKey)
                     const tools = server.tools.length ? server.tools : ['ping', 'list_resources']
                     dispatch({
                       type: 'patch-mcp-server',

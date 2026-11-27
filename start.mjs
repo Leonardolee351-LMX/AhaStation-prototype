@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url'
 import process from 'node:process'
 
 const rootDir = dirname(fileURLToPath(import.meta.url))
-const port = 5175
+const port = 5177
 const url = `http://localhost:${port}/`
 
 function fail(message) {

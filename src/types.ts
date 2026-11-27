@@ -62,6 +62,7 @@ export type Agent = {
   pinned: boolean
   aiProvider: string
   aiModel: string
+  systemPrompt?: string
   reasoning: ReasoningLevel
   tools: string[]
   skills: string[]
@@ -279,6 +280,7 @@ export type Preferences = {
   voicePolish: boolean
   speechVoice: 'default' | 'soft' | 'firm'
   speechFilter: 'all' | 'replies' | 'decisions'
+  soundMuted: boolean
   reportMode: boolean
   defaultIde: string
   layoutMode: 'desktop' | 'handheld'

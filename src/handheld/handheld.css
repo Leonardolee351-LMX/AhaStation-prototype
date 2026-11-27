@@ -35,7 +35,13 @@ html.hh-os .aha-skip {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--aha-canvas);
+  overflow: hidden;
+  background: color-mix(in srgb, var(--aha-canvas-tint) 72%, var(--aha-neutral-200));
+}
+html.hh-os,
+html.hh-os body,
+html.hh-os #root {
+  background: color-mix(in srgb, var(--aha-canvas-tint) 72%, var(--aha-neutral-200));
 }
 
 .hh-stage-glow {
@@ -89,10 +95,12 @@ html.hh-os .aha-skip {
 }
 
 .hh-device.is-port {
-  aspect-ratio: 9 / 16;
-  height: min(100dvh, calc(100vw * 16 / 9));
-  width: auto;
-  max-width: 100vw;
+  width: 414px;
+  height: 736px;
+  max-width: none;
+  flex: 0 0 auto;
+  transform: scale(min(1, 100vw / 414px, 100dvh / 736px));
+  transform-origin: center center;
   grid-template-columns: 1fr;
   grid-template-rows: auto 1fr auto auto;
   grid-template-areas:
@@ -103,10 +111,15 @@ html.hh-os .aha-skip {
 }
 
 .hh-device.is-land {
-  aspect-ratio: 16 / 9;
-  width: min(100vw, calc(100dvh * 16 / 9));
-  height: auto;
-  max-height: 100dvh;
+  width: 736px;
+  height: 414px;
+  max-width: none;
+  max-height: none;
+  flex: 0 0 auto;
+  border: 1px solid var(--aha-line-soft);
+  border-radius: var(--aha-radius-xl);
+  transform: scale(min(1, 100vw / 736px, 100dvh / 414px));
+  transform-origin: center center;
   grid-template-columns: 72px 1fr;
   grid-template-rows: auto 1fr auto;
   grid-template-areas:
@@ -217,9 +230,10 @@ html.hh-os .aha-skip {
 }
 
 .hh-device.is-land.is-docked {
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: 200px minmax(0, 1fr);
   grid-template-rows: 1fr;
   grid-template-areas: "face main";
+  background: var(--aha-canvas);
 }
 
 .hh-home-bar {
@@ -300,6 +314,7 @@ html.hh-os .aha-skip {
 
 .hh-greet {
   margin: 0;
+  flex-shrink: 0;
   font-family: var(--aha-body-family);
   font-size: var(--aha-body-size);
   line-height: var(--aha-body-leading);
@@ -323,19 +338,40 @@ html.hh-os .aha-skip {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: var(--aha-space-8);
+  justify-content: flex-start;
+  gap: var(--aha-space-12);
   padding: var(--aha-space-16);
-  background:
-    radial-gradient(70% 60% at 50% 42%, rgba(var(--aha-aqua-rgb), 0.16) 0%, transparent 70%),
-    var(--aha-card);
+  background: var(--aha-canvas);
   border-right: 1px solid var(--aha-line-soft);
 }
 
+.hh-dock-face .hh-companion-frame,
 .hh-dock-face .aha-companion,
 .hh-dock-face .aha-companion-field {
-  width: 180px;
-  height: 180px;
+  width: 120px;
+  height: 120px;
+}
+
+.hh-dock-face .hh-name {
+  margin: 0;
+  font-family: var(--aha-title-family);
+  font-size: var(--aha-label-size);
+  font-weight: 650;
+  line-height: var(--aha-label-leading);
+  color: var(--aha-text-title);
+  text-align: center;
+}
+
+.hh-dock-face .hh-status {
+  margin: 0;
+  text-align: center;
+}
+
+.hh-dock-face .hh-link {
+  flex-shrink: 0;
+  min-height: 40px;
+  min-width: 72px;
+  padding-inline: var(--aha-space-16);
 }
 
 .hh-dock-main {
@@ -344,15 +380,18 @@ html.hh-os .aha-skip {
   min-height: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   gap: var(--aha-space-12);
-  padding: var(--aha-space-16) var(--aha-space-20);
-  overflow: auto;
+  padding: var(--aha-space-16) var(--aha-space-20) var(--aha-space-12);
+  overflow: hidden;
+  background: var(--aha-canvas);
 }
 
 .hh-dock-main .hh-voice-slot,
 .hh-dock-main .hh-voice-btn {
   margin-top: auto;
+  flex-shrink: 0;
+  width: 100%;
 }
 
 
@@ -454,11 +493,114 @@ html.hh-os .aha-skip {
   display: flex;
   flex-direction: column;
   gap: var(--aha-space-8);
-  padding: var(--aha-space-16);
+  min-width: 0;
+  min-height: 0;
+  padding: var(--aha-space-12) var(--aha-space-16);
   border-radius: var(--aha-radius-md);
-  background: color-mix(in srgb, var(--aha-blue-50) 72%, var(--aha-white));
-  border: 1px solid color-mix(in srgb, var(--aha-color-primary) 20%, var(--aha-line-soft));
-  box-shadow: var(--aha-elev-rest), 0 0 0 1px color-mix(in srgb, var(--aha-color-primary) 8%, transparent), var(--aha-glow-soft);
+  background: color-mix(in srgb, var(--aha-white) 86%, #E8DCC4);
+  border: 1px solid color-mix(in srgb, #C9B896 28%, var(--aha-line-soft));
+  box-shadow: var(--aha-elev-rest), 0 8px 24px rgba(var(--aha-ink-rgb), 0.06);
+  overflow: hidden;
+}
+
+.hh-push-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--aha-space-8);
+  flex-wrap: wrap;
+  color: var(--aha-text-caption);
+  font-size: var(--aha-caption-size);
+}
+
+.hh-push-title {
+  margin: 0;
+  font-family: var(--aha-title-family);
+  font-size: var(--aha-title-size);
+  font-weight: var(--aha-title-weight);
+  line-height: var(--aha-title-leading);
+  color: var(--aha-text-title);
+  overflow-wrap: anywhere;
+}
+
+.hh-push-task {
+  margin: 0;
+  font-family: var(--aha-label-family);
+  font-size: var(--aha-caption-size);
+  line-height: var(--aha-caption-leading);
+  color: var(--aha-text-label);
+}
+
+.hh-push-choices {
+  min-width: 0;
+  min-height: 0;
+}
+
+.hh-push-choices .aha-option-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--aha-space-8);
+  min-width: 0;
+  min-height: 0;
+}
+
+.hh-push-choices.is-pair .aha-option-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  overflow: hidden;
+}
+
+.hh-push-choices .aha-option-list > li {
+  min-width: 0;
+  display: flex;
+}
+
+.hh-push-choices .aha-choice {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  min-height: 40px;
+  padding: var(--aha-space-8) var(--aha-space-12);
+  background: var(--aha-card);
+  box-sizing: border-box;
+}
+
+.hh-push-choices .aha-choice-mark {
+  width: var(--aha-space-24);
+  height: var(--aha-space-24);
+}
+
+.hh-push-choices .aha-choice-body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.hh-push-choices .aha-choice-body strong,
+.hh-push-choices .aha-choice-body em {
+  display: block;
+  overflow-wrap: anywhere;
+}
+
+.hh-push-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--aha-space-8);
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.hh-push-actions .aha-btn {
+  flex: 1 1 0;
+  min-width: 0;
+  width: auto;
+}
+
+.hh-push-actions .hh-push-view {
+  flex: 0 0 auto;
+  margin-left: auto;
 }
 
 .hh-push-head,
@@ -472,6 +614,21 @@ html.hh-os .aha-skip {
 
 .hh-push-head {
   justify-content: space-between;
+  flex-shrink: 0;
+  min-height: var(--aha-button-height-sm);
+}
+
+.hh-push-stepper {
+  display: flex;
+  align-items: center;
+  gap: var(--aha-space-4);
+  flex-shrink: 0;
+}
+
+.hh-push-stepper .aha-btn {
+  width: var(--aha-button-height-sm);
+  min-width: var(--aha-button-height-sm);
+  height: var(--aha-button-height-sm);
 }
 
 .hh-push-kicker,
@@ -818,6 +975,7 @@ html.hh-os .aha-skip {
 
 .hh-voice-btn {
   width: 100%;
+  min-height: var(--aha-button-height-md);
 }
 
 .hh-voice-slot .aha-voice {
@@ -1324,7 +1482,8 @@ html.hh-os .aha-skip {
 
 .hh-dock-swipe .hh-dock-main,
 .hh-dock-rooms-page {
-  padding: var(--aha-space-16) var(--aha-space-20) var(--aha-space-8);
+  padding: var(--aha-space-16) var(--aha-space-20) var(--aha-space-12);
+  box-sizing: border-box;
 }
 
 .hh-dock-dots {
@@ -1332,15 +1491,37 @@ html.hh-os .aha-skip {
   align-items: center;
   justify-content: center;
   gap: var(--aha-space-8);
-  height: var(--aha-space-32);
+  height: 40px;
   flex-shrink: 0;
+}
+.hh-dock-dots .hh-dot {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+.hh-dock-dots .hh-dot::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: var(--aha-radius-pill);
+  background: var(--aha-line-soft);
+}
+.hh-dock-dots .hh-dot.is-active::before {
+  background: var(--aha-color-accent-deep);
+  width: 16px;
 }
 
 .hh-dock-rooms-kicker {
-  margin: 0 0 var(--aha-space-12);
+  margin: 0;
+  flex-shrink: 0;
   font-family: var(--aha-label-family);
   font-size: var(--aha-label-size);
   font-weight: 600;
+  line-height: var(--aha-body-leading);
   color: var(--aha-text-caption);
 }
 
@@ -1378,10 +1559,12 @@ html.hh-os .aha-skip {
   font-size: var(--aha-label-size);
   font-weight: 600;
   color: var(--aha-text-title);
+  overflow-wrap: anywhere;
 }
 
 .hh-dock-rooms-page {
   display: flex;
   flex-direction: column;
+  gap: var(--aha-space-12);
   min-height: 0;
 }
