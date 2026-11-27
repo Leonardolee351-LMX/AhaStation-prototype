@@ -1044,10 +1044,10 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
   }, [state, handheld])
 
   useEffect(() => {
-    if (handheld || !state.toast) return
+    if (!state.toast) return
     const timer = window.setTimeout(() => reduceDispatch({ type: 'toast', message: null }), 3200)
     return () => window.clearTimeout(timer)
-  }, [handheld, state.toast])
+  }, [state.toast])
 
   useEffect(() => {
     persistColWidths(state.prefs)

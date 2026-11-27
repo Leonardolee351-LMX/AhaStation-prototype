@@ -1,0 +1,330 @@
+.hhp-task {
+  display: flex;
+  min-width: 0;
+  min-height: 100%;
+  flex-direction: column;
+  gap: var(--aha-space-12);
+  padding: var(--aha-space-16) var(--hhp-gutter) 0;
+}
+
+.hhp-task .hhp-task-summary {
+  display: grid;
+  gap: var(--aha-space-8);
+  background-image: radial-gradient(ellipse at top right, color-mix(in srgb, var(--aha-azure) 20%, transparent), transparent 72%);
+}
+
+.hhp-task-summary-head,
+.hhp-task-progress-label,
+.hhp-task-progress-run,
+.hhp-task-workflow-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--aha-space-8);
+}
+
+.hhp-task-summary-head h2 {
+  margin: 0;
+  font: 700 15px/1.4 var(--aha-font-body);
+  overflow-wrap: anywhere;
+}
+
+.hhp-task-summary-head p {
+  margin: var(--aha-space-4) 0 0;
+  font-size: 12px;
+}
+
+.hhp-task-summary-head .hhp-button {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.hhp-task-progress-label {
+  flex-wrap: wrap;
+}
+
+.hhp-task-progress-run {
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.hhp-task-status {
+  padding: var(--aha-space-4) var(--aha-space-8);
+  border-radius: var(--aha-radius-pill);
+  background: var(--hhp-primary-soft);
+  color: var(--hhp-text);
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.hhp-task-status.is-warning {
+  background: var(--aha-color-warning-soft);
+  color: var(--aha-orange-800);
+}
+
+.hhp-task-status.is-done {
+  background: var(--aha-color-success-soft);
+  color: var(--aha-color-success-hover);
+}
+
+.hhp-task-progress {
+  display: block;
+  min-width: 0;
+  flex: 1;
+  height: 6px;
+  overflow: hidden;
+  appearance: none;
+  border: none;
+  border-radius: var(--aha-radius-pill);
+  background: var(--hhp-line);
+  accent-color: var(--hhp-primary);
+}
+
+.hhp-task-progress::-webkit-progress-bar {
+  border-radius: inherit;
+  background: var(--hhp-line);
+}
+
+.hhp-task-progress::-webkit-progress-value {
+  border-radius: inherit;
+  background: var(--hhp-primary);
+}
+
+.hhp-task-progress::-moz-progress-bar {
+  border-radius: inherit;
+  background: var(--hhp-primary);
+}
+
+.hhp-task-pr-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--aha-space-8);
+}
+
+.hhp-task-pr-links .hhp-button {
+  padding-inline: var(--aha-space-8);
+}
+
+.hhp-task .hhp-task-workflow {
+  padding-block: 0;
+}
+
+.hhp-task-workflow summary {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--aha-space-8);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 650;
+  list-style: none;
+}
+
+.hhp-task-workflow summary::-webkit-details-marker {
+  display: none;
+}
+
+.hhp-task-workflow[open] summary svg {
+  transform: rotate(180deg);
+}
+
+.hhp-task-workflow-list {
+  display: grid;
+  gap: var(--aha-space-8);
+  margin: 0 0 var(--aha-space-12);
+  padding: 0;
+  list-style: none;
+}
+
+.hhp-task-workflow-list li {
+  padding: var(--aha-space-8) var(--aha-space-12);
+  border-inline-start: 2px solid var(--hhp-line);
+  background: var(--hhp-canvas);
+}
+
+.hhp-task-workflow-meta {
+  align-items: baseline;
+  font-size: 12px;
+}
+
+.hhp-task-workflow-meta time {
+  flex: 0 0 auto;
+  color: var(--hhp-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.hhp-task-workflow-list p,
+.hhp-task-workflow-empty {
+  margin: var(--aha-space-4) 0;
+  font-size: 13px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.hhp-task-workflow-empty {
+  margin-bottom: var(--aha-space-12);
+}
+
+.hhp-task-thread,
+.hhp-task-thread-list {
+  display: grid;
+  min-width: 0;
+  gap: var(--aha-space-12);
+}
+
+.hhp-task-delivery {
+  display: grid;
+  gap: var(--aha-space-8);
+}
+
+.hhp-task-delivery h3 {
+  margin: 0;
+  font-size: 15px;
+}
+
+.hhp-task-delivery p {
+  margin: 0;
+  color: var(--hhp-muted);
+  font-size: 13px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.hhp-task-delivery-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--aha-space-8);
+}
+
+.hhp-task-scroll-anchor {
+  scroll-margin-block-end: var(--aha-space-64);
+}
+
+.hhp-task-composer {
+  position: sticky;
+  z-index: 1;
+  bottom: 0;
+  margin-top: auto;
+  padding-block: var(--aha-space-8);
+  border-top: 1px solid var(--hhp-line);
+  background: var(--hhp-canvas);
+}
+
+.hhp-task-related dl {
+  margin: 0;
+}
+
+.hhp-task-related dl > div {
+  display: grid;
+  grid-template-columns: 5em minmax(0, 1fr);
+  align-items: baseline;
+  gap: var(--aha-space-8);
+  padding-block: var(--aha-space-8);
+  border-block-end: 1px solid var(--hhp-line);
+}
+
+.hhp-task-related dt,
+.hhp-task-diff-file > span {
+  color: var(--hhp-muted);
+  font-size: 12px;
+}
+
+.hhp-task-related dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.hhp-task-related .hhp-task-pr-links {
+  margin-top: var(--aha-space-12);
+}
+
+.hhp-task-diff {
+  display: grid;
+  gap: var(--aha-space-12);
+  min-width: 0;
+}
+
+.hhp-task-diff-file {
+  display: grid;
+  gap: var(--aha-space-4);
+}
+
+.hhp-task-diff-file select {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0 var(--aha-space-8);
+  border: 1px solid var(--hhp-line);
+  border-radius: var(--aha-radius-sm);
+  background: var(--hhp-surface);
+  color: var(--hhp-text);
+  font: inherit;
+}
+
+.hhp-task-diff-path {
+  margin: 0;
+  color: var(--hhp-muted);
+  font: 12px/1.5 var(--aha-font-mono);
+  overflow-wrap: anywhere;
+}
+
+.hhp-task-diff-versions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 168px), 1fr));
+  align-items: start;
+  gap: var(--aha-space-8);
+}
+
+.hhp-task-diff-version {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--hhp-line);
+  border-radius: var(--hhp-radius);
+}
+
+.hhp-task-diff-version h3 {
+  margin: 0;
+  padding: var(--aha-space-8) var(--aha-space-12);
+  border-bottom: 1px solid var(--hhp-line);
+  background: var(--hhp-canvas);
+  font-size: 13px;
+}
+
+.hhp-task-diff-version p {
+  margin: var(--aha-space-12);
+  font-size: 13px;
+}
+
+.hhp-task-diff-version pre {
+  margin: 0;
+  padding-block: var(--aha-space-4);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.hhp-task-diff-version code {
+  font: 11px/1.6 var(--aha-font-mono);
+}
+
+.hhp-task-diff-line {
+  display: grid;
+  grid-template-columns: 2.5em minmax(0, 1fr);
+  gap: var(--aha-space-8);
+  padding: var(--aha-space-4) var(--aha-space-8);
+}
+
+.hhp-task-diff-number {
+  color: var(--hhp-muted);
+  text-align: end;
+  user-select: none;
+}
+
+.hhp-task-diff-line.is-add {
+  background: color-mix(in srgb, var(--aha-color-success) 18%, transparent);
+}
+
+.hhp-task-diff-line.is-delete {
+  background: color-mix(in srgb, var(--aha-color-danger) 18%, transparent);
+}
